@@ -10,9 +10,11 @@ namespace la_mia_pizzeria_static.Controllers
                 new Pizza(1,"Prosciutto e funghi", "Pizza margherita con prosciutto e funghi", 6.00M, "https://assets.afcdn.com/recipe/20210514/120317_w640h486c1cx1060cy707cxb2121cyb1414.webp"),
                 new Pizza(2,"Pizza margherita semplice", "Pizza con margherita classica", 3.50M, "https://images.ctfassets.net/nw5k25xfqsik/64VwvKFqxMWQORE10Tn8pY/200c0538099dc4d1cf62fd07ce59c2af/20220211142754-margherita-9920.jpg?w=1024"),
            };
-        public IActionResult Index()
+    public IActionResult Index()
         {
-           
+            if (pizze.Count == 0)
+                return View("Error", "Non ci sono pizze!");
+
             return View(pizze);
         }
 
@@ -20,7 +22,10 @@ namespace la_mia_pizzeria_static.Controllers
         {
             Pizza pizza = pizze.FirstOrDefault(p => p.Id == id);
 
+            if (pizza == null)
+                return View("Error", "Nessuna pizza trovata con questo ID!");
+
             return View(pizza);
-        }
+        } 
     }
 }
